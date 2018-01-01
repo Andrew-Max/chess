@@ -142,7 +142,6 @@ class Pawn < Piece
   end
 end
 
-
 class Bishop < Court
   def self.initial_x
     [3, 5]
@@ -150,6 +149,7 @@ class Bishop < Court
 
   def can_move_to_coord(coord)
     super
+    # implement
   end
 end
 
@@ -160,6 +160,7 @@ class Rook < Court
 
   def can_move_to_coord(coord)
     super
+    # implement
   end
 end
 
@@ -170,7 +171,6 @@ class Knight < Court
 
   def can_move_to_coord(coord)
     super
-
     is_valid_el(coord)
   end
 
@@ -197,7 +197,7 @@ class Queen < Royal
   end
 
   def self.can_move_to_coord(from, to)
-
+    # implement
   end
 
   def can_move_to_coord(coord)
@@ -212,6 +212,7 @@ class King < Royal
 
   def can_move_to_coord(coord)
     super
+    validate_not_in_check(coord)
     raise if @location.x == coord.x && @location.y == coord.y
     raise unless one_or_none_away(@location.y, coord.y)
     raise unless one_or_none_away(@location.x, coord.x)
@@ -220,5 +221,9 @@ class King < Royal
   def one_or_none_away(n1, n2)
     val = (n1 - n2).abs
     [0, 1].include?(val)
+  end
+
+  def validate_not_in_check(coord)
+    #implement
   end
 end
