@@ -212,12 +212,13 @@ class King < Royal
 
   def can_move_to_coord(coord)
     super
-    if one_away(@location.x, coord.x)
-      raise unless @location.y == coord.y
-    elsif one_away(@location.y, coord.y)
-      raise unless @location.x == coord.x
-    else
-      raise
-    end
+    raise if @location.x == coord.x && @location.y == coord.y
+    raise unless one_or_none_away(@location.y, coord.y)
+    raise unless one_or_none_away(@location.x, coord.x)
+  end
+
+  def one_or_none_away(n1, n2)
+    val = (n1 - n2).abs
+    [0, 1].include?(val)
   end
 end
