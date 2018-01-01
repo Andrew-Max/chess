@@ -18,6 +18,10 @@ class Game
     toggle_mover
   end
 
+  def self.has_same_color_piece_at_coord(coord, color)
+    # implement
+  end
+
   private
 
   def toggle_mover
@@ -29,7 +33,9 @@ class Game
 
     PIECE_ARRAY.each do |piece|
       klass = Kernel.const_get(piece.capitalize)
-      klass.initial_x.each { |x| create_pieces_for_both_colors(klass, x) }
+      klass.initial_x.each do |x|
+        create_pieces_for_both_colors(klass, x)
+      end
     end
   end
 
@@ -55,11 +61,10 @@ class Coord
   attr_accessor :x, :y
 
   def self.is_valid(coord)
-    raise unless coord.x >=1 && coord.x <= 8 && coord.y >=1 coord.y <= 8
-  end
-
-  def self.not_taken_by_same_color(coord, color)
-    # implement
+    raise unless coord.x >=1 &&
+      coord.x <= 8 &&
+      coord.y >=1 &&
+      coord.y <= 8
   end
 
   def initialize(x, y)
@@ -102,7 +107,7 @@ class Piece
 
   def can_move_to_coord(coord)
     Coord.is_valid(coord)
-    Coord.not_taken_by_same_color(coord, @color)
+    Game.has_same_color_piece_at_coord(coord, @color)
   end
 
   def one_away(n1, n2)
